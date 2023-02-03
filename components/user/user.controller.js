@@ -77,7 +77,7 @@ class User {
     }
     meRoom = async (request, response) => {
         try {
-            const user = findUserId(request.userId);
+            const user = await findUserId(request.userId);
 
             console.log(user);
             if (!user) {

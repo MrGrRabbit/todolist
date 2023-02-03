@@ -3,10 +3,11 @@ const mongoose = require("mongoose");
 const User = require("./components/user/user.controller");
 const regValidation = require('./validations/auth');
 const checkAuth = require('./components/user/middleware/checkAuth');
+const Todo = require("./components/todo/todo.controller");
 
 const app = express();
 const PORT = 3000;
-
+// переделать в async / await
 mongoose.connect("mongodb://127.0.0.1:27017/todoList")
     .then(() => console.log('Connect DB'))
     .catch((err) => console.log('DB connect error', err));
@@ -21,6 +22,10 @@ app.post('/auth/login', User.authUser);
 app.post('/auth/register', regValidation, User.addUser);
 
 app.get('/auth/me', checkAuth, User.meRoom);
+
+app.get('/myTodoList', checkAuth, Todo.getListCase);
+
+app.post('/createTodo', checkAuth, Todo.createTodo);
 
 app.use((request, response) => {
     return response.status(404).send('<h2> Error: 404 </h2>');

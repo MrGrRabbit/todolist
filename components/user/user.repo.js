@@ -1,6 +1,6 @@
 const { UserSchema } = require("./user.model");
 const mongoose = require("mongoose");
-
+// Сделать в качестве методов БД
 const User = mongoose.model("User", UserSchema);
 
 function addUserRepo(email, password) {
