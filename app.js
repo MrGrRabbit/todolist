@@ -5,10 +5,13 @@ const regValidation = require('./validations/auth');
 const checkAuth = require('./components/user/middleware/checkAuth');
 const Todo = require("./components/todo/todo.controller");
 
+require('dotenv').config();
+
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT;
+const connectDB = process.env.CONNECT;
 // переделать в async / await
-mongoose.connect("mongodb://127.0.0.1:27017/todoList")
+mongoose.connect(connectDB)
     .then(() => console.log('Connect DB'))
     .catch((err) => console.log('DB connect error', err));
 
