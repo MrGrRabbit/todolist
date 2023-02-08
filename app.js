@@ -1,20 +1,15 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const User = require("./components/user/user.controller");
 const regValidation = require('./validations/auth');
 const checkAuth = require('./components/user/middleware/checkAuth');
 const Todo = require("./components/todo/todo.controller");
-
+const { SingletonInstance } = require('./mongoose.client');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT;
-const connectDB = process.env.CONNECT;
-// переделать в async / await
-mongoose.connect(connectDB)
-    .then(() => console.log('Connect DB'))
-    .catch((err) => console.log('DB connect error', err));
 
+SingletonInstance.getMongooseConnect();
 app.use(express.json());
 
 app.get('/', (request, response) => {
