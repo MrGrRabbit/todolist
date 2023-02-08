@@ -3,7 +3,7 @@ require('dotenv').config();
 
 const privateKey = process.env.PRIVATE_KEY;
 
-module.exports = (request, response, next) => {
+exports.authGuard = (request, response, next) => {
     const token = (request.headers.authorization || '').replace(/Bearer\s?/, '');
 
     if (token) {

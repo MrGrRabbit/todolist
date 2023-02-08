@@ -1,7 +1,7 @@
 const express = require('express');
 const User = require('./components/user/user.controller');
 const regValidation = require('./validations/auth');
-const checkAuth = require('./components/user/middleware/checkAuth');
+const { authGuard } = require('./components/user/middleware/authGuard');
 const Todo = require('./components/todo/todo.controller');
 const { SingletonInstance } = require('./mongoose.client');
 const process = require('process');
@@ -20,11 +20,11 @@ app.post('/auth/login', User.authUser);
 
 app.post('/auth/register', regValidation, User.addUser);
 
-app.get('/auth/me', checkAuth, User.meRoom);
+app.get('/auth/me', authGuard, User.meRoom);
 
-app.get('/myTodoList', checkAuth, Todo.getListCase);
+app.get('/myTodoList', authGuard, Todo.getListCase);
 
-app.post('/createTodo', checkAuth, Todo.createTodo);
+app.post('/createTodo', authGuard, Todo.createTodo);
 
 app.use((request, response) => {
     return response.status(404).send('<h2> Error: 404 </h2>');
