@@ -1,10 +1,14 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
+const privateKey = process.env.PRIVATE_KEY;
+
 module.exports = (request, response, next) => {
     const token = (request.headers.authorization || '').replace(/Bearer\s?/, '');
 
     if (token) {
         try {
-            const decoded = jwt.verify(token, '1bsmt9eW');
+            const decoded = jwt.verify(token, privateKey);
             request.userId = decoded._id;
 
             next();
@@ -18,5 +22,4 @@ module.exports = (request, response, next) => {
             message: 'Нет доступа',
         });
     }
-
-}
+};

@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const { validationResult } = require('express-validator');
 const { addUserRepo, findUser, findUserId } = require('./user.repo');
-const { UserSchema } = require('./user.model');
+require('dotenv').config();
+const privateKey = process.env.PRIVATE_KEY;
 
 class User {
     addUser = async (request, response, next) => {
@@ -24,7 +25,7 @@ class User {
                 {
                     _id: user._id,
                 },
-                '1bsmt9eW',
+                privateKey,
                 {
                     expiresIn: '900s',
                 }
@@ -53,10 +54,7 @@ class User {
                 });
             }
 
-            const isValidPass = await bcrypt.compare(
-                request.body.password,
-                user._doc.passwordHash
-            );
+            const isValidPass = await bcrypt.compare(request.body.password, user._doc.passwordHash);
             if (!isValidPass) {
                 return response.status(400).json({
                     message: 'Неверный логин или пароль',
@@ -67,7 +65,7 @@ class User {
                 {
                     _id: user._id,
                 },
-                '1bsmt9eW',
+                privateKey,
                 {
                     expiresIn: '900s',
                 }
