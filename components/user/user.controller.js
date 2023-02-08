@@ -13,9 +13,8 @@ class User {
                 return response.status(400).json(errors.array());
             }
 
-            const email = request.body.email;
+            const { email, password } = request.body;
             //----------------------------------------------
-            const password = request.body.password;
             const salt = await bcrypt.genSalt(10);
             const passwordHash = await bcrypt.hash(password, salt);
             //----------------------------------------------
@@ -45,7 +44,7 @@ class User {
 
     authUser = async (request, response) => {
         try {
-            const email = request.body.email;
+            const { email, password } = request.body;
             const user = await findUser(email);
 
             if (!user) {
@@ -54,7 +53,7 @@ class User {
                 });
             }
 
-            const isValidPass = await bcrypt.compare(request.body.password, user._doc.passwordHash);
+            const isValidPass = await bcrypt.compare(password, user._doc.passwordHash);
             if (!isValidPass) {
                 return response.status(400).json({
                     message: 'Неверный логин или пароль',

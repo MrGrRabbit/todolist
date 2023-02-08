@@ -10,8 +10,7 @@ class Todo {
 
     createTodo = async (request, response) => {
         try {
-            const task = request.body.task;
-            const user = request.userId;
+            const { task, user } = require.body;
             console.log(task, user);
             const todoCreate = new Schema({
                 task: task,
