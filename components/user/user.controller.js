@@ -59,7 +59,7 @@ class User {
                     message: 'Неверный логин или пароль',
                 });
             }
-            //next();
+
             const token = jwt.sign(
                 {
                     _id: user._id,
@@ -80,6 +80,7 @@ class User {
             });
         }
     };
+
     meRoom = async (request, response) => {
         try {
             const user = await findUserId(request.userId);
