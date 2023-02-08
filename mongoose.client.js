@@ -1,5 +1,5 @@
 require('dotenv').config();
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 //const connectDB = process.env.CONNECT;
 /**
  * @class Singleton
@@ -12,7 +12,8 @@ class Singleton {
         this.connectStr = connectStr;
     }
     getMongooseConnect() {
-        mongoose.connect(this.connectStr)
+        mongoose
+            .connect(this.connectStr)
             .then(() => console.log('Connect DB'))
             .catch((err) => console.log('DB connect error', err));
     }
@@ -21,4 +22,4 @@ class Singleton {
 const SingletonInstance = new Singleton(process.env.CONNECT);
 Object.freeze(SingletonInstance);
 
-module.exports = { SingletonInstance }
+module.exports = { SingletonInstance };

@@ -1,9 +1,10 @@
-const express = require("express");
-const User = require("./components/user/user.controller");
+const express = require('express');
+const User = require('./components/user/user.controller');
 const regValidation = require('./validations/auth');
 const checkAuth = require('./components/user/middleware/checkAuth');
-const Todo = require("./components/todo/todo.controller");
+const Todo = require('./components/todo/todo.controller');
 const { SingletonInstance } = require('./mongoose.client');
+const process = require('process');
 require('dotenv').config();
 
 const app = express();
